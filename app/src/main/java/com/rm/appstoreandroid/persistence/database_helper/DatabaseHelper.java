@@ -28,9 +28,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    private void runCreateStatements(SQLiteDatabase db){
+    private void runCreateStatements(SQLiteDatabase db) {
         db.execSQL(DatabaseContract.CategoryTable.CREATE_TABLE);
+        db.execSQL(DatabaseContract.ImageTABLE.CREATE_TABLE);
+        db.execSQL(DatabaseContract.AppTable.CREATE_TABLE);
+        db.execSQL(DatabaseContract.AppImage.CREATE_TABLE);
         db.execSQL(CREATE_CATEGORY_STATEMENT);
+
     }
 
     @Override
