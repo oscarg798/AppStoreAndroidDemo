@@ -1,18 +1,24 @@
 package com.rm.appstoreandroid.model.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by oscargallon on 5/5/16.
  */
-public class CategoryDTO {
+public class CategoryDTO  implements Serializable{
     private final String id;
 
     private final String term;
 
     private final String label;
 
+    private final int image;
+
     public String scheme;
 
-    public CategoryDTO(String id, String term, String label, String scheme) {
+
+    public CategoryDTO(int image, String id, String term, String label, String scheme) {
+        this.image = image;
         this.id = id;
         this.term = term;
         this.label = label;
@@ -39,6 +45,10 @@ public class CategoryDTO {
         this.scheme = scheme;
     }
 
+    public int getImage() {
+        return image;
+    }
+
     /**
      * Builder for categories
      */
@@ -51,6 +61,8 @@ public class CategoryDTO {
         public String label;
 
         public String scheme;
+
+        public int image;
 
         public CategoryDTOBuilder withAnId(String id) {
             this.id = id;
@@ -72,8 +84,13 @@ public class CategoryDTO {
             return this;
         }
 
-        public CategoryDTO createCategoryDTO(){
-            return new CategoryDTO(id,term,label, scheme);
+        public CategoryDTOBuilder withAnImage(int image) {
+            this.image = image;
+            return this;
+        }
+
+        public CategoryDTO createCategoryDTO() {
+            return new CategoryDTO(image, id, term, label, scheme);
         }
 
     }

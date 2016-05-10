@@ -1,5 +1,7 @@
 package com.rm.appstoreandroid.model.utils;
 
+import com.rm.appstoreandroid.model.dto.CategoryDTO;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -15,5 +17,15 @@ public class Callbacks {
         void onDatabaseOperationFailiure(Exception e);
     }
 
+    public interface DatabaseOperation{
+        void execute();
+    }
+
+    public interface GetCategoiesFromArrayResourcesCallback {
+
+        void onCategegoriesGot(List<CategoryDTO> categoryDTOs);
+
+        void onGetCategoriesError(Exception e);
+    }
 
 }

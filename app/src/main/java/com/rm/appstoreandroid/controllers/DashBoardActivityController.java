@@ -31,7 +31,7 @@ public class DashBoardActivityController extends AbstractController
      */
     public DashBoardActivityController(Activity activity) {
         super(activity);
-        loadInitData();
+        //loadInitData();
     }
 
 

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="books">
+        <item>@string/books_key</item>
+        <item>@string/books_label</item>
+    </string-array>
+
+    <string-array name="business">
+        <item>@string/business_key</item>
+        <item>@string/business_label</item>
+    </string-array>
+
+    <string-array name="education">
+        <item>@string/education_key</item>
+        <item>@string/education_label</item>
+    </string-array>
+
+    <string-array name="catalogs">
+        <item>@string/catalogs_key</item>
+        <item>@string/catalogs_label</item>
+    </string-array>
+
+    <string-array name="entertaiment">
+        <item>@string/entertaiment_key</item>
+        <item>@string/entertaiment_label</item>
+    </string-array>
+
+    <string-array name="finace">
+        <item>@string/finance_key</item>
+        <item>@string/finance_label</item>
+    </string-array>
+
+    <string-array name="food_and_drink">
+        <item>@string/food_and_drink_key</item>
+        <item>@string/food_and_drink_label</item>
+    </string-array>
+
+    <string-array name="games">
+        <item>@string/games_key</item>
+        <item>@string/games_label</item>
+    </string-array>
+
+
+    <string-array name="health_and_fitness">
+        <item>@string/health_and_fitness_key</item>
+        <item>@string/health_and_fitness_label</item>
+    </string-array>
+
+    <string-array name="lifestyle">
+        <item>@string/lifestyle_key</item>
+        <item>@string/lifestyle_label</item>
+    </string-array>
+
+    <string-array name="medical">
+        <item>@string/medical_key</item>
+        <item>@string/medical_label</item>
+    </string-array>
+
+    <string-array name="music">
+        <item>@string/music_key</item>
+        <item>@string/music_label</item>
+    </string-array>
+
+    <string-array name="navigation">
+        <item>@string/navigation_key</item>
+        <item>@string/navigation_label</item>
+    </string-array>
+
+    <string-array name="news">
+        <item>@string/news_key</item>
+        <item>@string/news_label</item>
+    </string-array>
+
+    <string-array name="photo_and_video">
+        <item>@string/photo_and_video_key</item>
+        <item>@string/photo_and_video_label</item>
+    </string-array>
+
+    <string-array name="productivity">
+        <item>@string/productivity_key</item>
+        <item>@string/productivity_label</item>
+    </string-array>
+
+    <string-array name="reference">
+        <item>@string/reference_key</item>
+        <item>@string/reference_label</item>
+    </string-array>
+
+    <string-array name="social_networking">
+        <item>@string/social_networking_key</item>
+        <item>@string/social_networking_label</item>
+    </string-array>
+
+    <string-array name="sports">
+        <item>@string/sports_key</item>
+        <item>@string/sports_label</item>
+    </string-array>
+
+    <string-array name="travel">
+        <item>@string/travel_key</item>
+        <item>@string/travel_label</item>
+    </string-array>
+
+    <string-array name="utilities">
+        <item>@string/utilities_key</item>
+        <item>@string/utilities_label</item>
+    </string-array>
+
+    <string-array name="weather">
+        <item>@string/weather_key</item>
+        <item>@string/weather_label</item>
+    </string-array>
+
+    <array name="categories">
+        <item>@array/books</item>
+        <item>@array/business</item>
+        <item>@array/education</item>
+        <item>@array/catalogs</item>
+        <item>@array/entertaiment</item>
+        <item>@array/finace</item>
+        <item>@array/food_and_drink</item>
+        <item>@array/games</item>
+        <item>@array/health_and_fitness</item>
+        <item>@array/lifestyle</item>
+        <item>@array/medical</item>
+        <item>@array/music</item>
+        <item>@array/navigation</item>
+        <item>@array/news</item>
+        <item>@array/photo_and_video</item>
+        <item>@array/productivity</item>
+        <item>@array/reference</item>
+        <item>@array/social_networking</item>
+        <item>@array/sports</item>
+        <item>@array/travel</item>
+        <item>@array/utilities</item>
+        <item>@array/weather</item>
+    </array>
+
+</resources>

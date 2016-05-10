@@ -8,5 +8,6 @@ public enum DatabaseOperationEnum {
     UPDATE,
     LOAD,
     LOAD_UNIQUE_RESULT,
-    DELETE;
+    DELETE,
+    INSERT_LIST;
 }

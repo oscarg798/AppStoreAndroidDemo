@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AppStoreAndroid</string>
+    <string name="business_label">Business</string>
+    <string name="catalogs_label">Catalogs</string>
+    <string name="education_label">Education</string>
+    <string name="entertaiment_label">Entertainment</string>
+    <string name="finance_label">Finance</string>
+    <string name="food_and_drink_label"><![CDATA[Food &amp Drink]]></string>
+    <string name="games_label">Games</string>
+    <string name="health_and_fitness_label"><![CDATA[Health &amp Fitness]]></string>
+    <string name="lifestyle_label">Lifestyle</string>
+    <string name="medical_label">Medical</string>
+    <string name="music_label">Music</string>
+    <string name="navigation_label">Navigation</string>
+    <string name="news_label">News</string>
+    <string name="photo_and_video_label"><![CDATA[Photo &amp Video]]></string>
+    <string name="productivity_label">Productivity</string>
+    <string name="reference_label">Reference</string>
+    <string name="social_networking_label">Social Networking</string>
+    <string name="sports_label">Sports</string>
+    <string name="travel_label">Travel</string>
+    <string name="utilities_label">Utilities</string>
+    <string name="weather_label">Weather</string>
+    <string name="categories_label">Categories</string>
+    <string name="books_label">Books</string>
+</resources>

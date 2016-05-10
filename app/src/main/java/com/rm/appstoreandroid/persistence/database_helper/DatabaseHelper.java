@@ -22,10 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         runCreateStatements(db);
-
-
     }
 
     private void runCreateStatements(SQLiteDatabase db) {
@@ -40,12 +37,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DatabaseContract.CategoryTable.DELETE_TABLE);
+        db.execSQL(DatabaseContract.ImageTABLE.DELETE_TABLE);
+        db.execSQL(DatabaseContract.AppTable.DELETE_TABLE);
+        db.execSQL(DatabaseContract.AppImage.DELETE_TABLE);
         runCreateStatements(db);
     }
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DatabaseContract.CategoryTable.DELETE_TABLE);
+        db.execSQL(DatabaseContract.ImageTABLE.DELETE_TABLE);
+        db.execSQL(DatabaseContract.AppTable.DELETE_TABLE);
+        db.execSQL(DatabaseContract.AppImage.DELETE_TABLE);
         runCreateStatements(db);
 
     }
