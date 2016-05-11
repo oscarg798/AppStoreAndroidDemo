@@ -113,7 +113,7 @@ public class SplashActivityController extends AbstractController
                 if (result) {
 
 
-                    List<CoupleParams> coupleParamsList =
+                    final List<CoupleParams> coupleParamsList =
                             new ArrayList<>();
 
                     coupleParamsList.add(new CoupleParams.CoupleParamBuilder(getActivity()
@@ -123,15 +123,24 @@ public class SplashActivityController extends AbstractController
 
                     final long timePassed = new Date().getTime() - requestDate.getTime();
                     if (timePassed > SPLASH_TIME_OUT) {
-                        changeActivity(DashBoardActivity.class, coupleParamsList);
+
+                        ((SplashActivity) getActivity()).animate();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                changeActivity(DashBoardActivity.class, coupleParamsList);
+                            }
+                        }, 1500);
+
                     } else {
                         final List<CoupleParams> coupleParamsList1 = coupleParamsList;
+                        ((SplashActivity) getActivity()).animate();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 changeActivity(DashBoardActivity.class, coupleParamsList1);
                             }
-                        }, SPLASH_TIME_OUT - timePassed);
+                        }, 1500);
                     }
                 } else {
                     onExecuteFaliure(returnedException);
