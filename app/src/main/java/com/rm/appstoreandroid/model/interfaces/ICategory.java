@@ -1,5 +1,6 @@
 package com.rm.appstoreandroid.model.interfaces;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
@@ -22,6 +23,7 @@ public interface ICategory {
                                          Callbacks.GetCategoiesFromArrayResourcesCallback
                                                  getCategoiesFromArrayResourcesCallback);
 
-    void saveCategoriesIntoDatabase(SQLiteDatabase sqLiteDatabase, List<CategoryDTO> categoryDTOList,
-                                    Callbacks.DatabaseLoadOperationCallback databaseLoadOperationCallback);
+    int[] saveCategoriesIntoDatabase(SQLiteDatabase sqLiteDatabase, List<CategoryDTO> categoryDTOList);
+
+    List<ContentValues> getContentValuesFromCategoriesDTOList(List<CategoryDTO> categoryDTOList);
 }

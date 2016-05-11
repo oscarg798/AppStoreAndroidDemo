@@ -5,7 +5,27 @@
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="action_settings" translatable="false">Settings</string>
-
+    <string name="entry_key">entry</string>
+    <string name="feed_key">feed</string>
+    <string name="image_key">im:image</string>
+    <string name="label_key">label</string>
+    <string name="link_key">link</string>
+    <string name="attributes_key">attributes</string>
+    <string name="href_key">href</string>
+    <string name="height_key">height</string>
+    <string name="app_name_key">im:name</string>
+    <string name="id_key">id</string>
+    <string name="bundle_id_key">im:bundleId</string>
+    <string name="category_key">category</string>
+    <string name="term_key">term</string>
+    <string name="artist_key">im:artist</string>
+    <string name="price_key">im:price</string>
+    <string name="amount_key">amount</string>
+    <string name="currency_key">currency</string>
+    <string name="release_date_key">im:releaseDate</string>
+    <string name="summary_key">summary</string>
+    <string name="rights_key">rights</string>
+    <string name="apps_key">apps</string>
 
     <string name="books_key" translatable="false">Books</string>
     <string name="business_key" translatable="false">Business</string>
@@ -58,6 +78,15 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="backend_url">https://itunes.apple.com/us/rss/topfreeapplications/limit=20/json</string>
+
+    <!--Message-->
+    <string name="error_message_prefix">_Ha ocurrido un error al resalizar la operacion </string>
+    <string name="default_error_message">Lo sentimos ha ocurrido un error inesperado</string>
+    <string name="error_title">Error</string>
+    <string name="can_not_get_app_from_category">No se pudieron obtener applicaciones</string>
+    <string name="title_activity_app">AppActivity</string>
 
 
 </resources>

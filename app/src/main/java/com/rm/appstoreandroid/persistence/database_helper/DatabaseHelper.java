@@ -10,11 +10,6 @@ import com.rm.appstoreandroid.persistence.contracts.DatabaseContract;
  * Created by oscargallon on 5/5/16.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private final String CREATE_CATEGORY_STATEMENT =
-            "insert into "
-                    + DatabaseContract.CategoryTable.TABLE_NAME +
-                    "(id, term, label, scheme) values (601,'Games'," +
-                    "'culito', 'GAMES')";
 
     public DatabaseHelper(Context context) {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
@@ -29,8 +24,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.CategoryTable.CREATE_TABLE);
         db.execSQL(DatabaseContract.ImageTABLE.CREATE_TABLE);
         db.execSQL(DatabaseContract.AppTable.CREATE_TABLE);
-        db.execSQL(DatabaseContract.AppImage.CREATE_TABLE);
-        db.execSQL(CREATE_CATEGORY_STATEMENT);
 
     }
 
@@ -39,7 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.CategoryTable.DELETE_TABLE);
         db.execSQL(DatabaseContract.ImageTABLE.DELETE_TABLE);
         db.execSQL(DatabaseContract.AppTable.DELETE_TABLE);
-        db.execSQL(DatabaseContract.AppImage.DELETE_TABLE);
         runCreateStatements(db);
     }
 
@@ -48,7 +40,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.CategoryTable.DELETE_TABLE);
         db.execSQL(DatabaseContract.ImageTABLE.DELETE_TABLE);
         db.execSQL(DatabaseContract.AppTable.DELETE_TABLE);
-        db.execSQL(DatabaseContract.AppImage.DELETE_TABLE);
         runCreateStatements(db);
 
     }

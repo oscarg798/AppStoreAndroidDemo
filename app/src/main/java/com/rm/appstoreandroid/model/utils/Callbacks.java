@@ -1,6 +1,9 @@
 package com.rm.appstoreandroid.model.utils;
 
+import com.rm.appstoreandroid.model.dto.AppDTO;
 import com.rm.appstoreandroid.model.dto.CategoryDTO;
+
+import org.json.JSONArray;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +29,12 @@ public class Callbacks {
         void onCategegoriesGot(List<CategoryDTO> categoryDTOs);
 
         void onGetCategoriesError(Exception e);
+    }
+
+    public interface GetAppDTOFromBackEndCallback{
+        void onAppsDTOGot(String appsDTO);
+
+        void onGetAppsDTOError(String message);
     }
 
 }

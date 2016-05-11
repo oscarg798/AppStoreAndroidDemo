@@ -1,39 +1,32 @@
 package com.rm.appstoreandroid.presentation.activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.rm.appstoreandroid.R;
 import com.rm.appstoreandroid.controllers.DashBoardActivityController;
 import com.rm.appstoreandroid.model.dto.CategoryDTO;
-import com.rm.appstoreandroid.presentation.fragments.CategoriesFragment;
+import com.rm.appstoreandroid.presentation.adapters.CategoriesAdapter;
+import com.rm.appstoreandroid.presentation.listeners.RecyclerItemOnClickListener;
+import com.rm.appstoreandroid.presentation.listeners.interfaces.OnItemClickListener;
 
 import java.util.List;
 
-public class DashBoardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class DashBoardActivity extends AppCompatActivity {
 
     private DashBoardActivityController dashBoardActivityController;
 
     private Toolbar toolbar;
 
-    private Fragment currentFragment;
+    private RecyclerView recyclerView;
 
-    private NavigationView navigationView;
-
+    private CategoriesAdapter categoriesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,30 +39,45 @@ public class DashBoardActivity extends AppCompatActivity
     private void initViewComponents() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
     }
 
     private void initComponents() {
         dashBoardActivityController = new DashBoardActivityController(this);
-        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_categories));
-        navigationView.getMenu().findItem(R.id.nav_categories).setChecked(true);
+
+        Bundle activityBundle = getIntent().getExtras();
+        if (activityBundle != null) {
+            final List<CategoryDTO> categoryDTOList =
+                    (List<CategoryDTO>) activityBundle.getSerializable(getString(R.string.categories_key));
+
+
+
+            if (categoryDTOList != null) {
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(),
+                        LinearLayoutManager.VERTICAL, false);
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setHasFixedSize(true);
+                final CategoriesAdapter categoriesAdapter = new CategoriesAdapter(getApplicationContext(),
+                        categoryDTOList);
+                recyclerView.setAdapter(categoriesAdapter);
+
+                recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(),
+                        new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                dashBoardActivityController
+                                        .getAppsDTOFromCategory(categoryDTOList.get(position).getTerm(),
+                                                categoryDTOList.get(position).getLabel());
+                            }
+                        }));
+            }
+        }
     }
 
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+
     }
 
     @Override
@@ -94,43 +102,4 @@ public class DashBoardActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void selectCurrentFramgmentFromMenuSelection(int id) {
-        if (id == R.id.nav_categories) {
-            currentFragment = new CategoriesFragment().newInstance(getIntent().getExtras());
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        selectCurrentFramgmentFromMenuSelection(id);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        changeFragment(currentFragment);
-        return true;
-    }
-
-    public void changeFragment(Fragment fragment) {
-        this.currentFragment = fragment;
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, fragment)
-                .addToBackStack(null)
-                .commit();
-
-    }
 }
