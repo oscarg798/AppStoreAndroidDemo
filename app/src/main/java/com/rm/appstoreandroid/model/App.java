@@ -186,9 +186,9 @@ public class App implements IApp, IHTTPServices {
         if (cursor == null) {
             return appDTOList;
         }
-
+        appDTOList = new ArrayList<>();
         if (cursor.moveToFirst()) {
-            appDTOList = new ArrayList<>();
+
             do {
                 AppDTO appDTO = new AppDTO.AppDTOBuilder()
                         .withAnArtist(cursor.getString(cursor.getColumnIndex(DatabaseContract.AppTable.COLUMN_ARTIST)))

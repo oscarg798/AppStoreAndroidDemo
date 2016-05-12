@@ -28,13 +28,40 @@ import com.rm.appstoreandroid.presentation.listeners.interfaces.OnItemClickListe
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Actividad para mostrar una lista de aplicaciones
+ * 
+ */
 public class AppActivity extends AppCompatActivity {
 
+    /**
+     * Lista de aplicaciones
+     */
     private List<AppDTO> appDTOList;
+
+    /**
+     * Toolbar
+     */
     private Toolbar toolbar;
+
+    /**
+     * RecyclerView para mostrar las actividades
+     */
     private RecyclerView recyclerView;
+
+    /**
+     * Coordinator layout de la actividad
+     */
     private CoordinatorLayout clApp;
+
+    /**
+     * Relative layout de la actividad
+     */
     private RelativeLayout rlApp;
+
+    /**
+     * Controlador de la actividad
+     */
     private AppActivityController appActivityController;
 
     @Override
@@ -44,9 +71,11 @@ public class AppActivity extends AppCompatActivity {
         initViewComponents();
         initComponents();
         animateActivityIn();
-
     }
 
+    /**
+     * Metodo que inicializa los componentes visuales de la actividad
+     */
     public void initViewComponents() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,9 +85,16 @@ public class AppActivity extends AppCompatActivity {
         rlApp = (RelativeLayout) findViewById(R.id.rl_app);
     }
 
+    /**
+     * MEtodo que inicia la logica de la actividad
+     */
     public void initComponents() {
         appActivityController = new AppActivityController(this);
 
+        /**
+         * Tratamos de obtener las aplicaciones que nos paso la
+         * actividad que nos llamo
+         */
         Bundle bundleActivity = getIntent().getExtras();
         if (bundleActivity != null) {
             appDTOList = (List<AppDTO>) bundleActivity
@@ -82,12 +118,18 @@ public class AppActivity extends AppCompatActivity {
 
             recyclerView.setAdapter(appAdapter);
 
+            /**
+             * Agregamos evento de click para una actividad de la lista
+             */
             recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(),
                     new OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
 
-
+                            /**
+                             * Definimos animacion personalizada
+                             * con elemento compartido
+                             */
                             ActivityOptionsCompat activityOptionsCompat
                                     = ActivityOptionsCompat
                                     .makeSceneTransitionAnimation(AppActivity.this, view, "transition");
@@ -113,6 +155,9 @@ public class AppActivity extends AppCompatActivity {
         overridePendingTransition(0, R.anim.rigth_left);
     }
 
+    /**
+     * Metodo que anima la entrada de la actividad
+     */
     public void animateActivityIn() {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.left_right);
         animation.reset();
