@@ -30,4 +30,6 @@ public interface IApp {
     List<AppDTO> getAPPDTOFromCursor(Cursor cursor, SQLiteDatabase db);
 
 
+
+
 }

@@ -7,7 +7,7 @@ public class DatabaseContract {
 
     public static final String DATABASE_NAME = "appstore";
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     private static final String TEXT_TYPE = " TEXT";
 
@@ -85,7 +85,6 @@ public class DatabaseContract {
         public static final String COLUMN_ARTIST = "artist";
         public static final String COLUMN_CATEGORY = "category";
         public static final String COLUMN_RELEASE_DATE = "release_date";
-
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " +
                 TABLE_NAME + "(" +
                 COLUMN_BUNDLE_ID + TEXT_TYPE + PRIMARY_KEY + COMMA_SEP +
@@ -107,6 +106,9 @@ public class DatabaseContract {
 
         public static final String COUNT_WHERE =
                 "select count(*) from " + TABLE_NAME + " where " + COLUMN_BUNDLE_ID + " = ?";
+
+        public static final String COUNT =
+                "select count(*) from " + TABLE_NAME;
 
         public static final String UPDATE_WHERE_BUNDLE_ID = COLUMN_BUNDLE_ID + " =?";
 

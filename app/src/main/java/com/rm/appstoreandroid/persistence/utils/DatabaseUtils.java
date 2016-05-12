@@ -15,7 +15,11 @@ public class DatabaseUtils {
 
     public static int getCount(SQLiteDatabase db, String query, String key) {
         Cursor c = null;
-        c = db.rawQuery(query, new String[]{key});
+        String[] whereArg = null;
+        if (key != null) {
+            whereArg = new String[]{key};
+        }
+        c = db.rawQuery(query, whereArg);
         if (c.moveToFirst()) {
             return c.getInt(0);
         }

@@ -1,44 +1,92 @@
 package com.rm.appstoreandroid.presentation.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.rm.appstoreandroid.R;
 import com.rm.appstoreandroid.controllers.SplashActivityController;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity implements Animation.AnimationListener {
 
     private SplashActivityController splashActivityController;
 
     private ProgressBar progressBar;
 
-    private boolean timerOut = false;
+    private CoordinatorLayout coordinatorLayout;
+
+    private LinearLayout lySplash;
+
+    private ImageView ivAppIcon;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        initViewComponents();
         initComponents();
+    }
 
+    private void initViewComponents() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().hide();
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cl_splash);
+        ivAppIcon = (ImageView) findViewById(R.id.iv_app_icon);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        lySplash = (LinearLayout) findViewById(R.id.ly_splash);
     }
 
     private void initComponents() {
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         splashActivityController = new SplashActivityController(this);
         splashActivityController.getCategoriesFromResources();
 
     }
 
-    public boolean isTimerOut() {
-        return timerOut;
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+
+
+    }
+
+    public void animateActivityOut() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        animation.reset();
+        animation.setAnimationListener(this);
+        coordinatorLayout.clearAnimation();
+        coordinatorLayout.startAnimation(animation);
+
+    }
+
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                splashActivityController.goToDashBoard();
+            }
+        }, 300);
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }

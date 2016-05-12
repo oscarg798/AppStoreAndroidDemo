@@ -42,6 +42,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppViewHolder> {
     public void onBindViewHolder(final AppViewHolder holder, int position) {
         final AppDTO appDTO = this.appDTOList.get(position);
         holder.getTvAppName().setText(appDTO.getName());
+
         if (appDTO.getImages() != null && appDTO.getImages().get(0) != null) {
             Picasso.with(context).load(appDTO.getImages().get(0).getLink())
                     .placeholder(context.getResources().getDrawable(Utils.getCategoryDrawable(appDTO.getCategory(),

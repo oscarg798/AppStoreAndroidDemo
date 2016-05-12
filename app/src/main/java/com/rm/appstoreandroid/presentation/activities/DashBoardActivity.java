@@ -1,6 +1,8 @@
 package com.rm.appstoreandroid.presentation.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.rm.appstoreandroid.R;
 import com.rm.appstoreandroid.controllers.DashBoardActivityController;
@@ -28,18 +34,26 @@ public class DashBoardActivity extends AppCompatActivity {
 
     private CategoriesAdapter categoriesAdapter;
 
+    private CoordinatorLayout clDashboard;
+
+    private RelativeLayout rlDashBoard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
         initViewComponents();
         initComponents();
+        animateActivityIn();
     }
 
     private void initViewComponents() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Categorias");
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        rlDashBoard = (RelativeLayout) findViewById(R.id.rl_dashboard);
+        clDashboard = (CoordinatorLayout) findViewById(R.id.cl_dashboard);
     }
 
     private void initComponents() {
@@ -49,7 +63,6 @@ public class DashBoardActivity extends AppCompatActivity {
         if (activityBundle != null) {
             final List<CategoryDTO> categoryDTOList =
                     (List<CategoryDTO>) activityBundle.getSerializable(getString(R.string.categories_key));
-
 
 
             if (categoryDTOList != null) {
@@ -77,7 +90,8 @@ public class DashBoardActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -101,5 +115,13 @@ public class DashBoardActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void animateActivityIn() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.pull_app);
+        animation.reset();
+        rlDashBoard.clearAnimation();
+        rlDashBoard.startAnimation(animation);
+    }
+
 
 }

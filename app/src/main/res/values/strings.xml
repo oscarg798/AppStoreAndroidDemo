@@ -26,6 +26,8 @@
     <string name="summary_key">summary</string>
     <string name="rights_key">rights</string>
     <string name="apps_key">apps</string>
+    <string name="app_key">app</string>
+
 
     <string name="books_key" translatable="false">Books</string>
     <string name="business_key" translatable="false">Business</string>
@@ -87,6 +89,22 @@
     <string name="error_title">Error</string>
     <string name="can_not_get_app_from_category">No se pudieron obtener applicaciones</string>
     <string name="title_activity_app">AppActivity</string>
-
+    <string name="title_activity_app_detail">AppDetailActivity</string>
+    <string name="app_artist_label">Artista</string>
+    <string name="app_summary_label">Resumen</string>
+    <string name="app_link_label">Link</string>
+    <string name="app_price_label">Precio</string>
+    <string name="app_release_date_label">Fecha Lanzamiento</string>
+    <string name="no_internet_connection_message">Para ejecutar la aplicación debe por
+        lo menos iniciarla una vez con conexion a internet, para volver a
+        intentarlo verifique su conexion a internet y presione aceptar de lo
+        contrario presione cancelar para salir</string>
+    <string name="alert_label">Alerta</string>
+    <string name="acept_label">Aceptar</string>
+    <string name="cancel_label">Cancelar</string>
+    <string name="error_label">Error</string>
+    <string name="no_internet_after_try_again_message">Aun no detectamos tu conexion, para volver a
+        intentarlo verifique su conexion a internet y presione aceptar de lo
+        contrario presione cancelar para salir </string>
 
 </resources>

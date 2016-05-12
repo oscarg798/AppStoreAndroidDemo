@@ -1,6 +1,7 @@
 package com.rm.appstoreandroid.controllers;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -104,5 +105,8 @@ public class DashBoardActivityController extends AbstractController {
             sqLiteDatabase.close();
         }
     }
+
+
+
 
 }
