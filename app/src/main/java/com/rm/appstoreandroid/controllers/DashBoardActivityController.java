@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 
 import com.rm.androidesentials.controllers.abstracts.AbstractController;
 import com.rm.androidesentials.model.utils.CoupleParams;
@@ -34,8 +31,10 @@ import java.util.List;
  */
 public class DashBoardActivityController extends AbstractController {
 
+    /**
+     * Instancia de la base de datos
+     */
     private SQLiteDatabase sqLiteDatabase;
-
 
     /**
      * Contructor de la clase
@@ -54,7 +53,6 @@ public class DashBoardActivityController extends AbstractController {
      * @param label label de la categoria, es el que el usuario ve
      */
     public void getAppsDTOFromCategory(final String term, final String label) {
-
         /**
          * Creamos un hilo para evitar que se bloquee la pantalla
          */
@@ -80,9 +78,24 @@ public class DashBoardActivityController extends AbstractController {
              */
             @Override
             public void onExecuteComplete(Object object) {
+
                 if (object != null) {
                     try {
                         List<AppDTO> appDTOList = (List<AppDTO>) object;
+                        /**
+                         * Si no hay aplicaciones para esta categoria mostramos un mensaje al usuario
+                         */
+                        if(appDTOList.size()==0){
+                            showAlertDialog(getActivity().getApplicationContext()
+                                    .getString(R.string.alert_label), getActivity().getApplicationContext()
+                                    .getString(R.string.category_has_no_apps));
+                            return;
+                        }
+
+                        /**
+                         * Cambios de actividad enviando las aplicacion a estas,
+                         * y el label de la categoria
+                         */
                         List<CoupleParams> coupleParamsList
                                 = new ArrayList<>();
                         coupleParamsList.add(
@@ -103,24 +116,38 @@ public class DashBoardActivityController extends AbstractController {
                     }
 
                 } else {
+                    /**
+                     * Si no  se obtuvieron las categorias por un error mostramos un mensaje al usuario
+                     */
                     showAlertDialog(getActivity().getApplicationContext()
                             .getString(R.string.error_title), getActivity().getApplicationContext()
                             .getString(R.string.can_not_get_app_from_category));
                 }
 
+                tryToCloseDB();
+
             }
 
+            /**
+             * Si hubo error tratando de obtener las categorias de BD
+             * mostramos el mensaje
+             * @param e
+             */
             @Override
             public void onExecuteFaliure(Exception e) {
                 showAlertDialog(getActivity().getApplicationContext()
                         .getString(R.string.error_title), getActivity().getApplicationContext()
                         .getString(R.string.can_not_get_app_from_category) + e.getMessage());
+                tryToCloseDB();
             }
         });
 
         executorAsyncTask.execute();
     }
 
+    /**
+     * Metodo que intenta cerrar la conexion a BD
+     */
     private void tryToCloseDB() {
         if (sqLiteDatabase != null && sqLiteDatabase.isOpen()) {
             sqLiteDatabase.close();

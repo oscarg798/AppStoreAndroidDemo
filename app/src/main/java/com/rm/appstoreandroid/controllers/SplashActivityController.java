@@ -135,6 +135,9 @@ public class SplashActivityController extends AbstractController
      * aplicaciones una vez estas han sido consultados
      */
     public void executeOperations() {
+        /**
+         * Lo hacemos en un hilo secundario para que no se bloquee la pantalla
+         */
         ExecutorAsyncTask executorAsyncTask = new ExecutorAsyncTask(new IExecutatorAsynTask() {
             @Override
             public Object execute() {
@@ -150,6 +153,10 @@ public class SplashActivityController extends AbstractController
                      * Guardamos o actualizamos las aplicaciones
                      */
                     App.getInstance().saveOrUpdateIntoDatabase(sqLiteDatabase, appDTOList);
+
+                    /**
+                     * Tratamos de cerra la base de datos
+                     */
 
                 } catch (Exception e) {
                     returnedException = e;
@@ -281,7 +288,9 @@ public class SplashActivityController extends AbstractController
 
                 }
             });
+
             executorAsyncTask.execute();
+
         } catch (JSONException e) {
             e.printStackTrace();
             showAlertDialog(getActivity().getApplicationContext()
@@ -312,9 +321,6 @@ public class SplashActivityController extends AbstractController
      */
     @Override
     public void onGetAppsDTOError(String message) {
-        /**
-         * TODO: should show a message
-         */
         if (message != null) {
             showAlertDialog(getActivity().getApplicationContext()
                             .getString(R.string.error_title),
@@ -355,19 +361,6 @@ public class SplashActivityController extends AbstractController
                 getActivity().getString(R.string.cancel_label));
     }
 
-    /**
-     * Metodo que espera por el tiempo que falta para el splash,
-     *  antes de cambiar de activity
-     */
-    private void checkSplashTimer() {
-        final long timePassed = new Date().getTime() - requestDate.getTime();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                goToDashBoard();
-            }
-        }, SPLASH_TIME_OUT - timePassed);
-    }
 
     /**
      * Este metodo trata de cerrar la conexion a la base de datos si esta abierta
@@ -414,6 +407,9 @@ public class SplashActivityController extends AbstractController
      */
     public void isInternetAvailable() {
 
+        /**
+         * Creamos un hilo
+         */
         ExecutorAsyncTask executorAsyncTask = new ExecutorAsyncTask(new IExecutatorAsynTask() {
             @Override
             public Object execute() {
@@ -459,15 +455,29 @@ public class SplashActivityController extends AbstractController
             public void onExecuteFaliure(Exception e) {
                 if (e != null) {
                     e.printStackTrace();
-                } else {
-                    onNoInternetConnection();
                 }
+                onNoInternetConnection();
+
 
             }
         });
 
         executorAsyncTask.execute();
-
-
     }
+
+    /**
+     * Metodo que espera por el tiempo que falta para el splash,
+     *  antes de cambiar de activity
+     */
+    private void checkSplashTimer() {
+        final long timePassed = new Date().getTime() - requestDate.getTime();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                goToDashBoard();
+            }
+        }, SPLASH_TIME_OUT - timePassed);
+    }
+
+
 }

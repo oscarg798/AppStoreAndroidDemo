@@ -4,18 +4,27 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Transition;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-
+;
 import com.rm.appstoreandroid.R;
 import com.rm.appstoreandroid.controllers.SplashActivityController;
+import com.rm.appstoreandroid.model.dto.CategoryDTO;
 
-public class SplashActivity extends AppCompatActivity implements Animation.AnimationListener {
+import java.io.Serializable;
+import java.util.List;
+
+public class SplashActivity extends AppCompatActivity {
 
     private SplashActivityController splashActivityController;
 
@@ -29,6 +38,7 @@ public class SplashActivity extends AppCompatActivity implements Animation.Anima
 
     private Toolbar toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +51,7 @@ public class SplashActivity extends AppCompatActivity implements Animation.Anima
         setContentView(R.layout.activity_splash);
         initViewComponents();
         initComponents();
+
     }
 
     private void initViewComponents() {
@@ -51,6 +62,7 @@ public class SplashActivity extends AppCompatActivity implements Animation.Anima
         ivAppIcon = (ImageView) findViewById(R.id.iv_app_icon);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         lySplash = (LinearLayout) findViewById(R.id.ly_splash);
+
     }
 
     private void initComponents() {
@@ -63,37 +75,9 @@ public class SplashActivity extends AppCompatActivity implements Animation.Anima
     protected void onStop() {
         super.onStop();
         splashActivityController.tryToCloseDB();
-
-
-    }
-
-    public void animateActivityOut() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-        animation.reset();
-        animation.setAnimationListener(this);
-        coordinatorLayout.clearAnimation();
-        coordinatorLayout.startAnimation(animation);
-
     }
 
 
-    @Override
-    public void onAnimationStart(Animation animation) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                splashActivityController.goToDashBoard();
-            }
-        }, 300);
-    }
 
-    @Override
-    public void onAnimationEnd(Animation animation) {
 
-    }
-
-    @Override
-    public void onAnimationRepeat(Animation animation) {
-
-    }
 }
