@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 
 import com.rm.androidesentials.controllers.abstracts.AbstractController;
 import com.rm.androidesentials.model.utils.CoupleParams;
@@ -44,10 +47,24 @@ public class DashBoardActivityController extends AbstractController {
         //loadInitData();
     }
 
+    /**
+     * Metodo que trata de obtener las aplicaciones de un categoria
+     *
+     * @param term  nombre de la categoria
+     * @param label label de la categoria, es el que el usuario ve
+     */
     public void getAppsDTOFromCategory(final String term, final String label) {
 
+        /**
+         * Creamos un hilo para evitar que se bloquee la pantalla
+         */
         ExecutorAsyncTask executorAsyncTask
                 = new ExecutorAsyncTask(new IExecutatorAsynTask() {
+            /**
+             * Tratamos de obtener las aplicaciones por categoria
+             * @return null si error, lista de aplicaciones por
+             * categorias
+             */
             @Override
             public Object execute() {
                 sqLiteDatabase = new DatabaseHelper(getActivity().getApplicationContext()).getReadableDatabase();
@@ -57,6 +74,10 @@ public class DashBoardActivityController extends AbstractController {
 
             }
 
+            /**
+             * Verifica el resultado de la ejecucion
+             * @param object lista de aplicaciones
+             */
             @Override
             public void onExecuteComplete(Object object) {
                 if (object != null) {
@@ -105,8 +126,6 @@ public class DashBoardActivityController extends AbstractController {
             sqLiteDatabase.close();
         }
     }
-
-
 
 
 }

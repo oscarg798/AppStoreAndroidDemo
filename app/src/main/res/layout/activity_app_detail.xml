@@ -43,40 +43,4 @@
 
     <include layout="@layout/content_app_detail" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:tint="@color/white"
-        android:src="@drawable/ic_favorite_border_black_24dp"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_share"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end|right"
-        android:layout_marginRight="@dimen/mini_fab_margin"
-        android:layout_width="wrap_content"
-        app:backgroundTint="@color/colorPrimary"
-        android:tint="@color/textIcons"
-        android:visibility="invisible"
-        android:src="@drawable/ic_share_black_24dp"
-        app:fabSize="mini"
-        android:layout_height="wrap_content" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_watch"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end|right"
-        android:layout_marginRight="@dimen/mini_fab_margin"
-        android:layout_width="wrap_content"
-        app:backgroundTint="@color/colorPrimary"
-        android:tint="@color/textIcons"
-        android:visibility="invisible"
-        android:src="@drawable/ic_share_black_24dp"
-        app:fabSize="mini"
-        android:layout_height="wrap_content" />
-
 </android.support.design.widget.CoordinatorLayout>

@@ -1,5 +1,6 @@
 package com.rm.appstoreandroid.presentation.activities;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -31,6 +32,12 @@ public class SplashActivity extends AppCompatActivity implements Animation.Anima
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean isLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
+        if(isLargeLayout) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         setContentView(R.layout.activity_splash);
         initViewComponents();
         initComponents();
@@ -55,7 +62,7 @@ public class SplashActivity extends AppCompatActivity implements Animation.Anima
     @Override
     protected void onStop() {
         super.onStop();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        splashActivityController.tryToCloseDB();
 
 
     }

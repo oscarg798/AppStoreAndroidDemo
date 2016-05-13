@@ -1,9 +1,12 @@
 package com.rm.appstoreandroid.presentation.activities;
 
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +44,12 @@ public class DashBoardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean isLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
+        if(isLargeLayout) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         setContentView(R.layout.activity_dash_board);
         initViewComponents();
         initComponents();
@@ -66,9 +75,16 @@ public class DashBoardActivity extends AppCompatActivity {
 
 
             if (categoryDTOList != null) {
-                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(),
-                        LinearLayoutManager.VERTICAL, false);
-                recyclerView.setLayoutManager(mLayoutManager);
+
+                GridLayoutManager gridLayoutManager = null;
+                if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+                    gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
+                }else{
+                    gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+                }
+
+
+                recyclerView.setLayoutManager(gridLayoutManager);
                 recyclerView.setHasFixedSize(true);
                 final CategoriesAdapter categoriesAdapter = new CategoriesAdapter(getApplicationContext(),
                         categoryDTOList);
@@ -87,12 +103,6 @@ public class DashBoardActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,6 +128,9 @@ public class DashBoardActivity extends AppCompatActivity {
 
     public void animateActivityIn() {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.pull_app);
+        if (Build.VERSION.SDK_INT >= 21) {
+            animation.setDuration(500);
+        }
         animation.reset();
         rlDashBoard.clearAnimation();
         rlDashBoard.startAnimation(animation);

@@ -1,5 +1,6 @@
 package com.rm.appstoreandroid.presentation.activities;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -36,17 +37,16 @@ public class AppDetailActivity extends AppCompatActivity {
 
     private ImageView ivAppIcon;
 
-    private FloatingActionButton floatingActionButton;
-
-    private FloatingActionButton fabShare;
-
-    private FloatingActionButton fabWatch;
-
-    private boolean isShowingSubFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean isLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
+        if (isLargeLayout) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         setContentView(R.layout.activity_app_detail);
         initViewComponents();
         initComponents();
@@ -56,33 +56,13 @@ public class AppDetailActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextAppearance(getApplicationContext(), R.style.app_detail_title);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tvAppArtist = (TextView) findViewById(R.id.tv_app_artist);
         tvAppLink = (TextView) findViewById(R.id.tv_app_link);
         tvAppPrice = (TextView) findViewById(R.id.tv_app_price);
         tvAppReleaseDate = (TextView) findViewById(R.id.tv_app_release_date);
         tvAppSummary = (TextView) findViewById(R.id.tv_app_summary);
         ivAppIcon = (ImageView) findViewById(R.id.iv_app_icon);
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-        fabShare = (FloatingActionButton) findViewById(R.id.fab_share);
-        fabWatch = (FloatingActionButton) findViewById(R.id.fab_watch);
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isShowingSubFab) {
-                    return;
-                }
-                showSubFabs();
-
-            }
-        });
-
-        fabShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideSubFabs();
-            }
-        });
 
     }
 
@@ -111,47 +91,5 @@ public class AppDetailActivity extends AppCompatActivity {
         tvAppPrice.setText("$ " + appDTO.getPrice() + appDTO.getPriceCurrency());
     }
 
-    public void showSubFabs() {
-        Animation showFabShare = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab);
-        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) fabShare.getLayoutParams();
-        layoutParams.rightMargin += (int) (fabShare.getWidth() * 1.7);
-        layoutParams.bottomMargin += (int) (fabShare.getHeight() * 0.25);
-        fabShare.setLayoutParams(layoutParams);
-        fabShare.startAnimation(showFabShare);
-        fabShare.setVisibility(View.VISIBLE);
-        isShowingSubFab = true;
-        fabShare.setClickable(true);
-
-        Animation showFabWatch = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab);
-        CoordinatorLayout.LayoutParams layoutParams2 = (CoordinatorLayout.LayoutParams) fabWatch.getLayoutParams();
-        layoutParams.rightMargin += (int) (fabWatch.getWidth() * 1.7);
-        layoutParams.bottomMargin += (int) (fabWatch.getHeight() * 0.9);
-        fabWatch.setLayoutParams(layoutParams);
-        fabWatch.startAnimation(showFabWatch);
-        fabWatch.setVisibility(View.VISIBLE);
-        fabShare.setClickable(true);
-
-        isShowingSubFab = true;
-    }
-
-    public void hideSubFabs() {
-        Animation hideFabShare = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab);
-        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) fabShare.getLayoutParams();
-        layoutParams.rightMargin -= (int) (fabShare.getWidth() * 1.7);
-        layoutParams.bottomMargin -= (int) (fabShare.getHeight() * 0.25);
-        fabShare.setLayoutParams(layoutParams);
-        fabShare.startAnimation(hideFabShare);
-        fabShare.setClickable(false);
-
-        Animation hideFabWatch = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab);
-        CoordinatorLayout.LayoutParams layoutParams2 = (CoordinatorLayout.LayoutParams) fabWatch.getLayoutParams();
-        layoutParams.rightMargin -= (int) (fabWatch.getWidth() * 1.7);
-        layoutParams.bottomMargin -= (int) (fabWatch.getHeight() * 0.9);
-        fabWatch.setVisibility(View.INVISIBLE);
-        fabWatch.setLayoutParams(layoutParams);
-        fabWatch.startAnimation(hideFabWatch);
-        fabWatch.setClickable(false);
-        isShowingSubFab = false;
-    }
 
 }

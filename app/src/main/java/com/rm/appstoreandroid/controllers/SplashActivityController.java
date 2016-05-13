@@ -41,22 +41,45 @@ public class SplashActivityController extends AbstractController
         implements Callbacks.GetCategoiesFromArrayResourcesCallback,
         Callbacks.GetAppDTOFromBackEndCallback {
 
+    /**
+     * Instancia de la base de datos
+     */
     private SQLiteDatabase sqLiteDatabase;
 
+    /**
+     * Lista de categorias
+     */
     private List<CategoryDTO> categoryDTOs;
 
+    /**
+     * Lista de aplicacion obtenidas del servicio
+     */
     private List<AppDTO> appDTOList;
 
+    /**
+     * Objeto para almacenar la hora de la peticion al servicio
+     */
     private Date requestDate = null;
 
+    /**
+     * Objeto para encapsular un error
+     */
     private Exception returnedException = null;
 
-    private int SPLASH_TIME_OUT = 3000;
+    /**
+     * Tiempo de espera minimo de la actividad
+     */
+    private final int SPLASH_TIME_OUT = 3000;
 
+    /**
+     * Lista de parametros a enviar a la otra actividad
+     */
     private List<CoupleParams> coupleParamsList;
 
+    /**
+     * Bandera para controlar si es la primera, o n vez de tratar de obtener conexion a internet
+     */
     private boolean isCheckingAgain;
-
 
     /**
      * Contructor de la clase
@@ -67,13 +90,21 @@ public class SplashActivityController extends AbstractController
         super(activity);
     }
 
-
+    /**
+     * Este metodo invoca el llamado para obtener
+     * las categorias desde el array defino
+     */
     public void getCategoriesFromResources() {
         Category.getInstance().getCategoriesFromResourcesArray(getActivity().getApplicationContext(),
                 this);
         requestDate = new Date();
     }
 
+    /**
+     * Callback de exito para cuando se han obtenido las categorias desde los recursos
+     *
+     * @param categoryDTOs lista de categorias obtenidas
+     */
     @Override
     public void onCategegoriesGot(List<CategoryDTO> categoryDTOs) {
         if (!isCheckingAgain) {
@@ -81,30 +112,46 @@ public class SplashActivityController extends AbstractController
             this.categoryDTOs = categoryDTOs;
         }
 
+        /**
+         * Debemos checkear si tenemos conexion a internet para
+         * consumir el servicio
+         */
         isInternetAvailable();
 
     }
 
+    /**
+     * Callback de Error para cuando se tratan de obtener las categorias
+     *
+     * @param e
+     */
     @Override
     public void onGetCategoriesError(Exception e) {
         e.printStackTrace();
     }
 
+    /**
+     * Metodo que guarda las categorias en la base de datos y las
+     * aplicaciones una vez estas han sido consultados
+     */
     public void executeOperations() {
         ExecutorAsyncTask executorAsyncTask = new ExecutorAsyncTask(new IExecutatorAsynTask() {
             @Override
             public Object execute() {
 
                 try {
-
+                    /**
+                     * Intentamos guardar las categorias
+                     */
                     Category.getInstance().saveCategoriesIntoDatabase(sqLiteDatabase,
                             categoryDTOs);
 
+                    /**
+                     * Guardamos o actualizamos las aplicaciones
+                     */
                     App.getInstance().saveOrUpdateIntoDatabase(sqLiteDatabase, appDTOList);
-                    tryToCloseDB();
 
                 } catch (Exception e) {
-                    tryToCloseDB();
                     returnedException = e;
                     return false;
                 }
@@ -113,10 +160,19 @@ public class SplashActivityController extends AbstractController
                 return true;
             }
 
+            /**
+             * Verificamos si todo fue exitoso
+             * @param object respuesta de la ejecucion del hilo, true si es correcto,
+             *               false de lo contrario
+             */
             @Override
             public void onExecuteComplete(Object object) {
                 boolean result = (boolean) object;
                 if (result) {
+                    /**
+                     * Verificamos si paso el tiempo minimo de espera para
+                     * cambiar la actividad
+                     */
                     final long timePassed = new Date().getTime() - requestDate.getTime();
                     if (timePassed > SPLASH_TIME_OUT) {
                         goToDashBoard();
@@ -129,6 +185,11 @@ public class SplashActivityController extends AbstractController
 
             }
 
+            /**
+             * Metodo que se encarga de mostrar un mensaje al usuario
+             * sobre el error
+             * @param e exception
+             */
             @Override
             public void onExecuteFaliure(Exception e) {
                 returnedException = e;
@@ -145,13 +206,22 @@ public class SplashActivityController extends AbstractController
                 }
             }
         });
+
         executorAsyncTask.execute();
     }
 
-
+    /**
+     * Callback de exito para el metodo que se encarga de obtener las aplicaciones
+     * desde el servicio
+     *
+     * @param appsDTO string con el json retornado por el servicio
+     */
     @Override
     public void onAppsDTOGot(String appsDTO) {
         try {
+            /**
+             * Obtenemos el objeto JsonArray con las aplicaciones
+             */
             JSONObject jsonObject = new JSONObject(appsDTO);
             jsonObject = jsonObject.getJSONObject(getActivity()
                     .getApplicationContext().getString(R.string.feed_key));
@@ -159,6 +229,10 @@ public class SplashActivityController extends AbstractController
             final JSONArray jsonArray = jsonObject.getJSONArray(getActivity()
                     .getApplicationContext().getString(R.string.entry_key));
 
+            /**
+             * Creamos un hilo para obtener las aplicaciones
+             * desde el Json array
+             */
             ExecutorAsyncTask executorAsyncTask = new ExecutorAsyncTask(new IExecutatorAsynTask() {
                 @Override
                 public Object execute() {
@@ -172,6 +246,10 @@ public class SplashActivityController extends AbstractController
                     return true;
                 }
 
+                /**
+                 * Metodo que verifica si la repsuesta del servicio fue correcta
+                 * @param object true si se obtuvieron las aplicacioens, false de lo contrario
+                 */
                 @Override
                 public void onExecuteComplete(Object object) {
                     if ((boolean) object) {
@@ -182,6 +260,10 @@ public class SplashActivityController extends AbstractController
                     }
                 }
 
+                /**
+                 * Metodo que muestra el error
+                 * @param e exepcion
+                 */
                 @Override
                 public void onExecuteFaliure(Exception e) {
                     if (e != null) {
@@ -210,6 +292,9 @@ public class SplashActivityController extends AbstractController
 
     }
 
+    /**
+     * Metodo que invoca el llamado para cambiar de actividad
+     */
     public void goToDashBoard() {
         coupleParamsList =
                 new ArrayList<>();
@@ -220,6 +305,11 @@ public class SplashActivityController extends AbstractController
         changeActivity(DashBoardActivity.class, coupleParamsList);
     }
 
+    /**
+     * Callback de eror para cuando se tratan de obtener las aplicaciones del servicio
+     *
+     * @param message mensaje de error
+     */
     @Override
     public void onGetAppsDTOError(String message) {
         /**
@@ -241,6 +331,12 @@ public class SplashActivityController extends AbstractController
 
     }
 
+    /**
+     * Este metodo muestra el mensaje de volver a intentar consultar las aplicaciones
+     * del servicio, pero no se tiene conexion a internet
+     *
+     * @param message mensaje a mostrar
+     */
     private void showRetryMessage(int message) {
         showAlertDialog(getActivity().getString(R.string.alert_label), getActivity().getString(message),
                 new DialogInterface.OnClickListener() {
@@ -259,6 +355,10 @@ public class SplashActivityController extends AbstractController
                 getActivity().getString(R.string.cancel_label));
     }
 
+    /**
+     * Metodo que espera por el tiempo que falta para el splash,
+     *  antes de cambiar de activity
+     */
     private void checkSplashTimer() {
         final long timePassed = new Date().getTime() - requestDate.getTime();
         new Handler().postDelayed(new Runnable() {
@@ -269,22 +369,35 @@ public class SplashActivityController extends AbstractController
         }, SPLASH_TIME_OUT - timePassed);
     }
 
-    private void tryToCloseDB() {
+    /**
+     * Este metodo trata de cerrar la conexion a la base de datos si esta abierta
+     */
+    public void tryToCloseDB() {
         if (sqLiteDatabase != null && sqLiteDatabase.isOpen()) {
             sqLiteDatabase.close();
         }
     }
 
-    public void onInternetConnection() {
+    /**
+     * Callback de exito para la verificacion de internet,
+     * si si hay tratamos de consultar las aplicaciones
+     */
+    private void onInternetConnection() {
         App.getInstance().getAppsDTOFromBackend(this, getActivity()
                 .getApplicationContext().getString(R.string.backend_url));
         isCheckingAgain = false;
     }
 
-    public void onNoInternetConnection() {
+    /**
+     * Callback de error para cuando no hay conexion a la base de datos
+     */
+    private void onNoInternetConnection() {
+        /**
+         * Intentamos obtener las aplicaciones de base de datos, para ver si podemos ingresar
+         * si no mostramos mensaje
+         */
         if (DatabaseUtils.getCount(sqLiteDatabase, DatabaseContract.AppTable.COUNT, null) > 0) {
             checkSplashTimer();
-            tryToCloseDB();
         } else {
             if (!isCheckingAgain) {
                 showRetryMessage(R.string.no_internet_connection_message);
@@ -296,11 +409,20 @@ public class SplashActivityController extends AbstractController
 
     }
 
+    /**
+     * Metodo que verifica la conexion a internet del usuario
+     */
     public void isInternetAvailable() {
 
         ExecutorAsyncTask executorAsyncTask = new ExecutorAsyncTask(new IExecutatorAsynTask() {
             @Override
             public Object execute() {
+
+                /**
+                 * Tratamos de conectarnos a google y obtener su ip, si hay conexion
+                 * por que el provedor de red puede estar habilitado pero puede
+                 * que no tenga conexion a internet
+                 */
                 InetAddress ipAddr = null;
                 try {
                     ipAddr = InetAddress.getByName("google.com");
@@ -315,6 +437,10 @@ public class SplashActivityController extends AbstractController
                 }
             }
 
+            /**
+             * Metodo que verifica la respuesta de la conexion a internet
+             * @param object true si hay conexion, false si no
+             */
             @Override
             public void onExecuteComplete(Object object) {
                 boolean res = (boolean) object;
@@ -325,6 +451,10 @@ public class SplashActivityController extends AbstractController
                 }
             }
 
+            /**
+             * informamos que no hay internet
+             * @param e error
+             */
             @Override
             public void onExecuteFaliure(Exception e) {
                 if (e != null) {

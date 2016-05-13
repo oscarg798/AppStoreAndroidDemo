@@ -1,6 +1,8 @@
 package com.rm.appstoreandroid.presentation.activities;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -39,6 +42,12 @@ public class AppActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        boolean isLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
+        if(isLargeLayout) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
         initViewComponents();
@@ -71,10 +80,14 @@ public class AppActivity extends AppCompatActivity {
 
             getSupportActionBar().setTitle(title);
 
-            LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(),
-                    LinearLayoutManager.VERTICAL, false);
+            GridLayoutManager gridLayoutManager = null;
+            if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+                gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
+            }else{
+                gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+            }
 
-            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setLayoutManager(gridLayoutManager);
 
             recyclerView.setHasFixedSize(true);
 
@@ -107,14 +120,20 @@ public class AppActivity extends AppCompatActivity {
         }
     }
 
+
+
+
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(0, R.anim.rigth_left);
+
     }
 
     public void animateActivityIn() {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.left_right);
+        if (Build.VERSION.SDK_INT >= 21) {
+            animation.setDuration(500);
+        }
         animation.reset();
         rlApp.clearAnimation();
         rlApp.startAnimation(animation);
