@@ -72,10 +72,12 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    public void finish() {
+        super.finish();
         splashActivityController.tryToCloseDB();
     }
+
+
 
 
 

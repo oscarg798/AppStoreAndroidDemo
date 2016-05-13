@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/categories_label"
-                android:textSize="32sp"
+                android:textSize="28sp"
                 android:textStyle="bold" />
         </LinearLayout>
 

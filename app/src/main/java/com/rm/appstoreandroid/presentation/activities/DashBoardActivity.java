@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,7 +46,7 @@ public class DashBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boolean isLargeLayout = getResources().getBoolean(R.bool.isLargeLayout);
-        if(isLargeLayout) {
+        if (isLargeLayout) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -63,6 +64,20 @@ public class DashBoardActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         rlDashBoard = (RelativeLayout) findViewById(R.id.rl_dashboard);
         clDashboard = (CoordinatorLayout) findViewById(R.id.cl_dashboard);
+
+
+    }
+
+    private void showOfflineModeMessage() {
+        Snackbar.make(clDashboard, getString(R.string.offline_label), Snackbar.LENGTH_LONG)
+                .setAction( getString(R.string.got_label), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                })
+                .setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
+                .show();
     }
 
     private void initComponents() {
@@ -73,13 +88,18 @@ public class DashBoardActivity extends AppCompatActivity {
             final List<CategoryDTO> categoryDTOList =
                     (List<CategoryDTO>) activityBundle.getSerializable(getString(R.string.categories_key));
 
+            String isInOfflineMode = activityBundle.getString(getString(R.string.offline_key));
+
+            if (isInOfflineMode != null && isInOfflineMode.equals(getString(R.string.offline_key))) {
+                showOfflineModeMessage();
+            }
 
             if (categoryDTOList != null) {
 
                 GridLayoutManager gridLayoutManager = null;
                 if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
                     gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
-                }else{
+                } else {
                     gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
                 }
 

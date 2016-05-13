@@ -6,17 +6,40 @@ import java.io.Serializable;
  * Created by oscargallon on 5/5/16.
  */
 public class CategoryDTO  implements Serializable{
+
+    /**
+     * Id de la categoria
+     */
     private final String id;
 
+    /**
+     * Nombre de la aplicacion
+     */
     private final String term;
 
+    /**
+     * Nombre a mostrar de la aplicacion
+     */
     private final String label;
 
+    /**
+     * Referencia a el icono de la aplicacion
+     */
     private final int image;
 
+    /**
+     * Scheme
+     */
     public String scheme;
 
-
+    /**
+     *
+     * @param image  Referencia a el icono de la aplicacion
+     * @param id Id de la categoria
+     * @param term Nombre de la aplicacion
+     * @param label Nombre a mostrar de la aplicacion
+     * @param scheme  Scheme
+     */
     public CategoryDTO(int image, String id, String term, String label, String scheme) {
         this.image = image;
         this.id = id;

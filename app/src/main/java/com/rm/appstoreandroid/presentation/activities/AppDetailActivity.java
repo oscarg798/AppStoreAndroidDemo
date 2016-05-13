@@ -1,6 +1,8 @@
 package com.rm.appstoreandroid.presentation.activities;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -59,6 +61,13 @@ public class AppDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tvAppArtist = (TextView) findViewById(R.id.tv_app_artist);
         tvAppLink = (TextView) findViewById(R.id.tv_app_link);
+        tvAppLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLink();
+            }
+        });
+
         tvAppPrice = (TextView) findViewById(R.id.tv_app_price);
         tvAppReleaseDate = (TextView) findViewById(R.id.tv_app_release_date);
         tvAppSummary = (TextView) findViewById(R.id.tv_app_summary);
@@ -76,6 +85,12 @@ public class AppDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void openLink() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(appDTO
+                .getAppLink()));
+        startActivity(browserIntent);
+    }
+
     public void fillViewsWithData(AppDTO appDTO) {
 
         if (appDTO.getImages() != null) {
@@ -87,8 +102,8 @@ public class AppDetailActivity extends AppCompatActivity {
         tvAppArtist.setText(appDTO.getArtist());
         tvAppLink.setText(appDTO.getAppLink());
         tvAppSummary.setText(appDTO.getSumary());
-        tvAppReleaseDate.setText(appDTO.getReleaseDate());
-        tvAppPrice.setText("$ " + appDTO.getPrice() + appDTO.getPriceCurrency());
+        tvAppReleaseDate.setText(appDTO.getReleaseDate().substring(0, 10));
+        tvAppPrice.setText(appDTO.getPrice() + " " + appDTO.getPriceCurrency());
     }
 
 

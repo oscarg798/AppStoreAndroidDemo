@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/categories_label"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
 

@@ -123,6 +123,8 @@
                 android:layout_gravity="left"
                 android:layout_weight="1"
                 android:gravity="left"
+                android:autoLink="web"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/app_link_label" />
 
         </LinearLayout>

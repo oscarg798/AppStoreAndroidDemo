@@ -7,10 +7,27 @@ import java.io.Serializable;
  */
 public class ImageDTO  implements Serializable{
 
+    /**
+     * Link de la imagen
+     */
     private final String link;
+
+    /**
+     * Altura de la imagen
+     */
     private final String attributes;
+
+    /**
+     * Bundle id de la aplicacion
+     */
     private String app;
 
+    /**
+     *
+     * @param link  Link de la imagen
+     * @param attributes Altura de la imagen
+     * @param app Bundle id de la aplicacion
+     */
     private ImageDTO(String link, String attributes, String app) {
         this.link = link;
         this.attributes = attributes;
@@ -33,6 +50,9 @@ public class ImageDTO  implements Serializable{
         this.app = app;
     }
 
+    /**
+     * Patron builder de la imagen
+     */
     public static class ImageDTOBuilder {
         private String link;
         private String attributes;

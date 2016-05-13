@@ -24,4 +24,23 @@
     <string name="weather_label">Weather</string>
     <string name="categories_label">Categories</string>
     <string name="books_label">Books</string>
+    <string name="acept_label">Acept</string>
+    <string name="no_internet_after_try_again_message">We can not determinate your internet connection yet, please check it, and press acept to try again or cancel to close</string>
+    <string name="no_internet_connection_message">We can not determinate your internet connection, please check it, and press acept to try again or cancel to close</string>
+    <string name="alert_label">Alert</string>
+    <string name="app_artist_label">Artist</string>
+    <string name="app_link_label">Link</string>
+    <string name="app_name_key"></string>
+    <string name="app_price_label">Price</string>
+    <string name="app_release_date_label">Release Date</string>
+    <string name="app_summary_label">Summary</string>
+    <string name="can_not_get_app_from_category">Can not get Apps</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="default_error_message">Sorry, unexpected error has occurred</string>
+    <string name="error_label">Error</string>
+    <string name="error_message_prefix">Sorry, unexpected error has occurred when we try to execute the operation</string>
+    <string name="error_title">Error</string>
+    <string name="category_has_no_apps">This category has no applications</string>
+    <string name="got_label">Got it</string>
+    <string name="offline_label">You are Offline</string>
 </resources>

@@ -20,9 +20,7 @@ public class Callbacks {
         void onDatabaseOperationFailiure(Exception e);
     }
 
-    public interface DatabaseOperation{
-        void execute();
-    }
+
 
     public interface GetCategoiesFromArrayResourcesCallback {
 

@@ -130,6 +130,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_weight="1"
+                android:autoLink="web"
+                android:textColor="@color/colorPrimary"
                 android:gravity="left"
                 android:textSize="24sp"
                 android:text="@string/app_link_label" />

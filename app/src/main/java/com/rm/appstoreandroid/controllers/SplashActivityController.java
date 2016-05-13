@@ -81,6 +81,8 @@ public class SplashActivityController extends AbstractController
      */
     private boolean isCheckingAgain;
 
+    private boolean isInOfflineMode;
+
     /**
      * Contructor de la clase
      *
@@ -154,10 +156,6 @@ public class SplashActivityController extends AbstractController
                      */
                     App.getInstance().saveOrUpdateIntoDatabase(sqLiteDatabase, appDTOList);
 
-                    /**
-                     * Tratamos de cerra la base de datos
-                     */
-
                 } catch (Exception e) {
                     returnedException = e;
                     return false;
@@ -202,14 +200,24 @@ public class SplashActivityController extends AbstractController
                 returnedException = e;
                 if (e != null) {
                     e.printStackTrace();
-                    showAlertDialog(getActivity().getApplicationContext()
-                                    .getString(R.string.error_title),
-                            e.getMessage());
+                    try {
+                        showAlertDialog(getActivity().getApplicationContext()
+                                        .getString(R.string.error_title),
+                                e.getMessage());
+                    } catch (Exception ee) {
+                        e.printStackTrace();
+                    }
+
                 } else {
-                    showAlertDialog(getActivity().getApplicationContext()
-                                    .getString(R.string.error_title),
-                            getActivity().getApplicationContext()
-                                    .getString(R.string.default_error_message));
+                    try {
+                        showAlertDialog(getActivity().getApplicationContext()
+                                        .getString(R.string.error_title),
+                                getActivity().getApplicationContext()
+                                        .getString(R.string.default_error_message));
+                    } catch (Exception ee) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         });
@@ -301,18 +309,6 @@ public class SplashActivityController extends AbstractController
 
     }
 
-    /**
-     * Metodo que invoca el llamado para cambiar de actividad
-     */
-    public void goToDashBoard() {
-        coupleParamsList =
-                new ArrayList<>();
-        coupleParamsList.add(new CoupleParams.CoupleParamBuilder(getActivity()
-                .getApplicationContext().getString(R.string.categories_key))
-                .nestedObject((Serializable) categoryDTOs)
-                .createCoupleParam());
-        changeActivity(DashBoardActivity.class, coupleParamsList);
-    }
 
     /**
      * Callback de eror para cuando se tratan de obtener las aplicaciones del servicio
@@ -322,17 +318,9 @@ public class SplashActivityController extends AbstractController
     @Override
     public void onGetAppsDTOError(String message) {
         if (message != null) {
-            showAlertDialog(getActivity().getApplicationContext()
-                            .getString(R.string.error_title),
-                    message);
-            Log.i(getActivity().getApplicationContext()
-                    .getString(R.string.error_label), message);
-
+            showRetryMessage(R.string.error_getting_services_message);
         } else {
-            showAlertDialog(getActivity().getApplicationContext()
-                            .getString(R.string.error_title),
-                    getActivity().getApplicationContext()
-                            .getString(R.string.default_error_message));
+            showRetryMessage(R.string.error_getting_services_message);
         }
 
     }
@@ -390,6 +378,7 @@ public class SplashActivityController extends AbstractController
          * si no mostramos mensaje
          */
         if (DatabaseUtils.getCount(sqLiteDatabase, DatabaseContract.AppTable.COUNT, null) > 0) {
+            isInOfflineMode = true;
             checkSplashTimer();
         } else {
             if (!isCheckingAgain) {
@@ -467,7 +456,7 @@ public class SplashActivityController extends AbstractController
 
     /**
      * Metodo que espera por el tiempo que falta para el splash,
-     *  antes de cambiar de activity
+     * antes de cambiar de activity
      */
     private void checkSplashTimer() {
         final long timePassed = new Date().getTime() - requestDate.getTime();
@@ -477,6 +466,27 @@ public class SplashActivityController extends AbstractController
                 goToDashBoard();
             }
         }, SPLASH_TIME_OUT - timePassed);
+    }
+
+    /**
+     * Metodo que invoca el llamado para cambiar de actividad
+     */
+    public void goToDashBoard() {
+        coupleParamsList =
+                new ArrayList<>();
+        coupleParamsList.add(new CoupleParams.CoupleParamBuilder(getActivity()
+                .getApplicationContext().getString(R.string.categories_key))
+                .nestedObject((Serializable) categoryDTOs)
+                .createCoupleParam());
+
+        if (isInOfflineMode) {
+            isInOfflineMode = false;
+            coupleParamsList.add(new CoupleParams.CoupleParamBuilder(getActivity()
+                    .getApplicationContext().getString(R.string.offline_key))
+                    .nestedParam(getActivity()
+                            .getApplicationContext().getString(R.string.offline_key)).createCoupleParam());
+        }
+        changeActivity(DashBoardActivity.class, coupleParamsList);
     }
 
 

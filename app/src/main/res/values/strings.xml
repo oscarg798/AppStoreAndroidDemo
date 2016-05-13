@@ -5,28 +5,29 @@
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="action_settings" translatable="false">Settings</string>
-    <string name="entry_key">entry</string>
-    <string name="feed_key">feed</string>
-    <string name="image_key">im:image</string>
-    <string name="label_key">label</string>
-    <string name="link_key">link</string>
-    <string name="attributes_key">attributes</string>
-    <string name="href_key">href</string>
-    <string name="height_key">height</string>
-    <string name="app_name_key">im:name</string>
-    <string name="id_key">id</string>
+    <string name="entry_key" translatable="false">entry</string>
+    <string name="feed_key" translatable="false">feed</string>
+    <string name="image_key" translatable="false">im:image</string>
+    <string name="label_key" translatable="false">label</string>
+    <string name="link_key" translatable="false">link</string>
+    <string name="attributes_key" translatable="false">attributes</string>
+    <string name="href_key" translatable="false">href</string>
+    <string name="height_key" translatable="false">height</string>
+    <string name="app_name_key" translatable="false">im:name</string>
+    <string name="id_key" translatable="false">id</string>
     <string name="bundle_id_key">im:bundleId</string>
-    <string name="category_key">category</string>
-    <string name="term_key">term</string>
-    <string name="artist_key">im:artist</string>
-    <string name="price_key">im:price</string>
-    <string name="amount_key">amount</string>
-    <string name="currency_key">currency</string>
-    <string name="release_date_key">im:releaseDate</string>
-    <string name="summary_key">summary</string>
-    <string name="rights_key">rights</string>
-    <string name="apps_key">apps</string>
-    <string name="app_key">app</string>
+    <string name="category_key" translatable="false">category</string>
+    <string name="term_key" translatable="false">term</string>
+    <string name="artist_key" translatable="false">im:artist</string>
+    <string name="price_key" translatable="false">im:price</string>
+    <string name="amount_key" translatable="false">amount</string>
+    <string name="currency_key" translatable="false">currency</string>
+    <string name="release_date_key" translatable="false">im:releaseDate</string>
+    <string name="summary_key" translatable="false">summary</string>
+    <string name="rights_key" translatable="false">rights</string>
+    <string name="apps_key" translatable="false">apps</string>
+    <string name="app_key" translatable="false">app</string>
+    <string name="offline_key" translatable="false">app</string>
 
 
     <string name="books_key" translatable="false">Books</string>
@@ -76,12 +77,12 @@
     <string name="travel_label">Viajes</string>
     <string name="utilities_label">Utilidades</string>
     <string name="weather_label">Clima</string>
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_splash" translatable="false">SplashActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
-    <string name="backend_url">https://itunes.apple.com/us/rss/topfreeapplications/limit=20/json</string>
+    <string name="backend_url" translatable="false">https://itunes.apple.com/us/rss/topfreeapplications/limit=20/json</string>
 
     <!--Message-->
     <string name="error_message_prefix">_Ha ocurrido un error al resalizar la operacion </string>
@@ -89,8 +90,8 @@
     <string name="error_title">Error</string>
     <string name="can_not_get_app_from_category">No se pudieron obtener applicaciones</string>
     <string name="category_has_no_apps">Esta categoria no tiene aplicaciones</string>
-    <string name="title_activity_app">AppActivity</string>
-    <string name="title_activity_app_detail">AppDetailActivity</string>
+    <string name="title_activity_app" translatable="false">AppActivity</string>
+    <string name="title_activity_app_detail" translatable="false">AppDetailActivity</string>
     <string name="app_artist_label">Artista</string>
     <string name="app_summary_label">Resumen</string>
     <string name="app_link_label">Link</string>
@@ -107,5 +108,9 @@
     <string name="no_internet_after_try_again_message">Aun no detectamos tu conexion, para volver a
         intentarlo verifique su conexion a internet y presione aceptar de lo
         contrario presione cancelar para salir </string>
+    <string name="offline_label">Esta en modo offline</string>
+    <string name="got_label">Entendito</string>
+    <string name="error_getting_services_message">A ocurrido un error al contactar el servicio,
+    para volver a intentarlo presione aceptar, cancelar para salir</string>
 
 </resources>
